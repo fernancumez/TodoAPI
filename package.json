@@ -1,26 +1,26 @@
 {
   "name": "todo-api",
   "version": "1.0.0",
-  "main": "app.ts",
+  "main": "app.js",
   "scripts": {
     "build": "tsc",
-    "start": "concurrently \"tsc -w\" \"nodemon dist/src/app.js\""
+    "start": "concurrently \"tsc -w\" \"nodemon dist/js/app.js\""
   },
   "keywords": [],
   "author": "Fernando Cúmez",
   "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "mongoose": "^5.10.0"
+    "cors": "2.8.5",
+    "express": "4.17.1",
+    "mongoose": "5.10.0"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.7",
-    "@types/express": "^4.17.7",
-    "@types/mongoose": "^5.7.36",
-    "@types/node": "^14.6.0",
-    "concurrently": "^5.3.0",
-    "nodemon": "^2.0.4"
+    "@types/cors": "2.8.7",
+    "@types/express": "4.17.7",
+    "@types/mongoose": "5.7.36",
+    "@types/node": "14.6.0",
+    "concurrently": "5.3.0",
+    "nodemon": "2.0.4"
   },
   "repository": {
     "type": "git",
@@ -30,5 +30,5 @@
     "url": "https://github.com/fernancumez/TodoAPI/issues"
   },
   "homepage": "https://github.com/fernancumez/TodoAPI#readme",
-  "description": ""
+  "description": "Rest API for Todo App with React, TypeScript, NodeJS, and MongoDB"
 }
