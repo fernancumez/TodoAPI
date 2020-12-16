@@ -1,31 +1,21 @@
 import express, { Express } from "express";
-import mongoose from "mongoose";
-import cors from "cors";
 import todoRoutes from "./routes";
+import config from "./config";
+import morgan from "morgan";
+import cors from "cors";
 
 const app: Express = express();
 
-const PORT: string | number = process.env.PORT || 4000;
+//Settings
+app.set("port", config.PORT);
 
+// Middlewares
 app.use(cors());
+app.use(morgan("dev"));
 app.use(express.json());
-app.use(todoRoutes);
+app.use(express.urlencoded({ extended: true }));
 
-const uri: string = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.oxbda.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`;
-const options = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-};
+// Routes
+app.use("/api/todos", todoRoutes);
 
-mongoose.set("useFindAndModify", false);
-
-mongoose
-  .connect(uri, options)
-  .then(() =>
-    app.listen(PORT, () =>
-      console.log(`Server running on http://localhost:${PORT}`)
-    )
-  )
-  .catch((error) => {
-    throw error;
-  });
+export default app;
