@@ -2,77 +2,103 @@ import { Response, Request } from "express";
 import { ITodo } from "../types/todo";
 import Todo from "../models/todo";
 
-const getTodos = async (req: Request, res: Response): Promise<void> => {
+// Find todo
+const getTodo = async (req: Request, res: Response): Promise<Response> => {
   try {
+    const { id: _id } = req.params;
+
+    // Sentence to search the item in the database
+    const todo = await Todo.findById({ _id });
+
+    // If the resource does not exisit
+    if (!todo) return res.status(404).json({ error: "Resource not found" });
+
+    // If the resource exist
+    return res.status(200).json(todo);
+  } catch (error) {
+    return res.status(400).json({ error });
+  }
+};
+
+// Get all todos
+const getTodos = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    // Sentence to search all the item in the database
     const todos: ITodo[] = await Todo.find();
 
-    res.status(200).json({ todos });
+    return res.status(200).json({ todos });
   } catch (error) {
-    throw error;
+    return res.status(400).json({ error });
   }
 };
 
-const addTodo = async (req: Request, res: Response): Promise<void> => {
+// Create new todo
+const addTodo = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const body = req.body as Pick<ITodo, "name" | "description" | "status">;
+    const { name, description, status } = req.body as Pick<
+      ITodo,
+      "name" | "description" | "status"
+    >;
 
-    const todo: ITodo = new Todo({
-      name: body.name,
-      description: body.description,
-      status: body.status,
-    });
+    const body = { name, description, status };
+    const todo: ITodo = new Todo(body);
 
+    // Save the new item
     const newTodo: ITodo = await todo.save();
-    const allTodos: ITodo[] = await Todo.find();
 
-    res
-      .status(201)
-      .json({ message: "Todo added", todo: newTodo, todos: allTodos });
+    return res.status(201).json({ message: "Todo added", todo: newTodo });
   } catch (error) {
-    throw error;
+    return res.status(400).json({ error });
   }
 };
 
-const updateTodo = async (req: Request, res: Response): Promise<void> => {
+// Update todo
+const updateTodo = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const {
-      params: { id },
-      body,
-    } = req;
+    const { id: _id } = req.params;
+    const { name, description, status } = req.body as Pick<
+      ITodo,
+      "name" | "description" | "status"
+    >;
 
+    const body = { name, description, status };
+
+    // Sentence to update the todo
     const updateTodo: ITodo | null = await Todo.findByIdAndUpdate(
-      { _id: id },
+      { _id },
       body
     );
 
-    const allTodos: ITodo[] = await Todo.find();
+    // If the resource does not exisit
+    if (!updateTodo)
+      return res.status(404).json({ error: "Resource not found" });
 
-    res.status(200).json({
+    // If the resource exist
+    const todoUpdated: ITodo | null = await Todo.findById({ _id });
+
+    return res.status(200).json({
       message: "Todo Updated",
-      todo: updateTodo,
-      todos: allTodos,
+      todo: todoUpdated,
     });
   } catch (error) {
-    throw error;
+    return res.status(400).json({ error });
   }
 };
 
-const deleteTodo = async (req: Request, res: Response): Promise<void> => {
+// Delete todo
+const deleteTodo = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const deletedTodo: ITodo | null = await Todo.findByIdAndRemove(
-      req.params.id
-    );
+    const { id } = req.params;
 
-    const allTodos: ITodo[] = await Todo.find();
+    const deletedTodo: ITodo | null = await Todo.findByIdAndRemove(id);
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "Todo deleted",
       todo: deletedTodo,
-      todos: allTodos,
     });
   } catch (error) {
-    throw error;
+    return res.status(400).json({ error });
   }
 };
 
-export { getTodos, addTodo, updateTodo, deleteTodo };
+export { getTodo, getTodos, addTodo, updateTodo, deleteTodo };
