@@ -1,7 +1,0 @@
-{
-  "env": {
-    "MONGO_USER": "fernando",
-    "MONGO_PASSWORD": "fernando",
-    "MONGO_DB": "todoapp"
-  }
-}
