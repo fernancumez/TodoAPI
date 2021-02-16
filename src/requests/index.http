@@ -1,5 +1,5 @@
 ### GET posts/:id
-GET http://localhost:4000/api/todos/5f483d67e352b825b8d90d6e
+GET http://localhost:4000/api/todos/602b1075eea57b22fc6819fc
 
 ### GET posts
 GET http://localhost:4000/api/todos
@@ -11,7 +11,7 @@ Content-Type: application/json
 {
   "name": "Emprendedores",
   "description": "Tengo algo pendiente",
-  "status": false,
+  "status": false
 }
 
 ### PUT Update post
@@ -22,7 +22,7 @@ Content-Type: application/json
 {
   "name": "Electrónica Digital",
   "description": "Tengo una reunion",
-  "status": false,
+  "status": false
 }
 
 ### DELETE Delete post
