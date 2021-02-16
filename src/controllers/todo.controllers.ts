@@ -1,14 +1,14 @@
 import { Response, Request } from "express";
 import { ITodo } from "../types/todo";
-import Todo from "../models/todo";
+import Todo from "../models/todo.models";
 
 // Find todo
 const getTodo = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const { id: _id } = req.params;
+    const todoId = req.params.id;
 
     // Sentence to search the item in the database
-    const todo = await Todo.findById({ _id });
+    const todo = await Todo.findById(todoId);
 
     // If the resource does not exisit
     if (!todo) return res.status(404).json({ error: "Resource not found" });
@@ -55,18 +55,12 @@ const addTodo = async (req: Request, res: Response): Promise<Response> => {
 // Update todo
 const updateTodo = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const { id: _id } = req.params;
-    const { name, description, status } = req.body as Pick<
-      ITodo,
-      "name" | "description" | "status"
-    >;
-
-    const body = { name, description, status };
+    const todoId = req.params.id;
 
     // Sentence to update the todo
     const updateTodo: ITodo | null = await Todo.findByIdAndUpdate(
-      { _id },
-      body
+      todoId,
+      req.body
     );
 
     // If the resource does not exisit
@@ -74,7 +68,7 @@ const updateTodo = async (req: Request, res: Response): Promise<Response> => {
       return res.status(404).json({ error: "Resource not found" });
 
     // If the resource exist
-    const todoUpdated: ITodo | null = await Todo.findById({ _id });
+    const todoUpdated: ITodo | null = await Todo.findById(todoId);
 
     return res.status(200).json({
       message: "Todo Updated",
@@ -88,9 +82,9 @@ const updateTodo = async (req: Request, res: Response): Promise<Response> => {
 // Delete todo
 const deleteTodo = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const { id } = req.params;
+    const todoId = req.params.id;
 
-    const deletedTodo: ITodo | null = await Todo.findByIdAndRemove(id);
+    const deletedTodo: ITodo | null = await Todo.findByIdAndRemove(todoId);
 
     return res.status(200).json({
       message: "Todo deleted",
