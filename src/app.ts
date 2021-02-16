@@ -1,12 +1,12 @@
 import express, { Express } from "express";
-import todoRoutes from "./routes";
+import todoRoutes from "./routes/todo.routes";
 import config from "./config";
 import morgan from "morgan";
 import cors from "cors";
 
 const app: Express = express();
 
-//Settings
+// Settings
 app.set("port", config.PORT);
 
 // Middlewares

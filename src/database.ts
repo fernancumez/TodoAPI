@@ -1,8 +1,10 @@
-import { connect, ConnectionOptions } from "mongoose";
+import { connect, connection, ConnectionOptions } from "mongoose";
 import config from "./config";
 
 export const startConnection = async () => {
   try {
+    const URI = config.DATABASE_URL;
+
     const connectionOptions: ConnectionOptions = {
       useCreateIndex: true,
       useNewUrlParser: true,
@@ -10,8 +12,9 @@ export const startConnection = async () => {
       useUnifiedTopology: true,
     };
 
-    await connect(config.MONGO_URI, connectionOptions);
+    await connect(URI, connectionOptions);
     console.log(`Database is connected!`);
+    console.log(connection.name);
   } catch (err) {
     console.error(err);
   }
