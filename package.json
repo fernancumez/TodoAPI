@@ -1,13 +1,15 @@
 {
   "name": "todo-list-api",
+  "homepage": "https://github.com/fernancumez/TodoAPI#readme",
+  "description": "Rest API for Todo App with React, TypeScript, NodeJS, and MongoDB",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf dist && tsc",
-    "watch": "rimraf dist && tsc -w",
     "clean": "rimraf dist",
-    "start": "export NODE_ENV=production || SET NODE_ENV=production && npm run build && node dist/index.js",
-    "dev": "export NODE_ENV=development || SET NODE_ENV=development && nodemon dist/index.js"
+    "build": "npm run clean && tsc",
+    "watch": "npm run clean && tsc -w",
+    "start": "export NODE_ENV=production || SET NODE_ENV=production&& npm run build && node dist/index.js",
+    "dev": "export NODE_ENV=development || SET NODE_ENV=development&& nodemon dist/index.js"
   },
   "keywords": [],
   "author": "fernancumez",
@@ -36,7 +38,5 @@
   },
   "bugs": {
     "url": "https://github.com/fernancumez/TodoAPI/issues"
-  },
-  "homepage": "https://github.com/fernancumez/TodoAPI#readme",
-  "description": "Rest API for Todo App with React, TypeScript, NodeJS, and MongoDB"
+  }
 }
