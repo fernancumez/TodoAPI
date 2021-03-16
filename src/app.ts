@@ -1,13 +1,13 @@
-import express, { Express } from "express";
+import express, { Application } from "express";
 import todoRoutes from "./routes/todo.routes";
 import config from "./config";
 import morgan from "morgan";
 import cors from "cors";
 
-const app: Express = express();
+const app: Application = express();
 
 // Settings
-app.set("port", config.PORT);
+app.set("port", parseInt(config.PORT));
 
 // Middlewares
 app.use(cors());

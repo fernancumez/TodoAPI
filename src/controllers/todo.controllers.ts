@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import { ITodo } from "../types/todo";
+import { ITodo } from "../models/types/todo.types";
 import Todo from "../models/todo.models";
 
 // Find todo
